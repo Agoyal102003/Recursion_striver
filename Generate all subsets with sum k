@@ -1,0 +1,52 @@
+// Approach 1
+
+const int MOD = 1e9 + 7;
+	int perfectSumUtil(int arr[], int n, int sum) {
+    // Base case 1: If sum becomes zero, we found a valid subset
+    if (sum == 0) {
+        return 1;
+    }
+    
+    // Base case 2: If no elements are left and sum is still not zero, no valid subset
+    if (n == 0) {
+        return 0;
+    }
+
+    // If current element is greater than sum, skip it
+    if (arr[n - 1] > sum) {
+        return perfectSumUtil(arr, n - 1, sum) % MOD;
+    }
+
+    // Recursive calls: Either include the current element or exclude it
+    int include = perfectSumUtil(arr, n - 1, sum - arr[n - 1]) % MOD;
+    int exclude = perfectSumUtil(arr, n - 1, sum) % MOD;
+
+    return (include + exclude) % MOD;
+}
+
+int perfectSum(int arr[], int n, int sum) {
+    // Count the number of zeros in the array
+    int zeroCount = 0;
+    for (int i = 0; i < n; i++) {
+        if (arr[i] == 0) {
+            zeroCount++;
+        }
+    }
+
+    // Remove zeros and solve the problem for the rest of the elements
+    int validElements[n - zeroCount];
+    int index = 0;
+    for (int i = 0; i < n; i++) {
+        if (arr[i] != 0) {
+            validElements[index++] = arr[i];
+        }
+    }
+
+    // Get the result for the rest of the elements
+    int result = perfectSumUtil(validElements, n - zeroCount, sum) % MOD;
+
+    // If there are zeros, multiply by the number of subsets they can form (2^zeroCount)
+    result = (result * (1LL << zeroCount) % MOD) % MOD;
+
+    return result;
+}
