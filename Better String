@@ -1,0 +1,39 @@
+// Approach 1 -> Recursive way 
+
+// Helper function to generate all distinct subsequences of a string
+void generateSubsequences(const string &str, int index, string current, unordered_set<string> &subsequences) {
+    // Base case: If we've processed all characters
+    if (index == str.length()) {
+        subsequences.insert(current);  // Add the current subsequence to the set
+        return;
+    }
+
+    // Exclude the current character
+    generateSubsequences(str, index + 1, current, subsequences);
+
+    // Include the current character
+    generateSubsequences(str, index + 1, current + str[index], subsequences);
+}
+
+// Function to count distinct subsequences for a given string
+int countDistinctSubsequences(const string &str) {
+    unordered_set<string> subsequences;  // Set to store distinct subsequences
+    generateSubsequences(str, 0, "", subsequences);
+    return subsequences.size();  // The size of the set gives the count of distinct subsequences
+}
+
+// Function to find the better string
+string findBetterString(string str1, string str2) {
+    // Count distinct subsequences for both strings
+    int count1 = countDistinctSubsequences(str1);
+    int count2 = countDistinctSubsequences(str2);
+
+    // Compare the counts and return the better string
+    if (count1 > count2) {
+        return str1;
+    } else if (count2 > count1) {
+        return str2;
+    } else {
+        return str1;  // If counts are equal, return str1 as per the problem statement
+    }
+}
