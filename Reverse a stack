@@ -1,0 +1,27 @@
+// Approach 1 -> Recursive way 
+
+void PushElements(stack<int>& St, int element)
+    {
+        if(St.empty())
+        {
+            St.push(element);
+            return;
+        }    
+        int top=St.top();
+        St.pop();
+        PushElements(St, element);
+        
+        St.push(top);
+    }
+
+    void Reverse(stack<int> &St){
+        if(St.empty())
+        {
+            return;
+        }
+        int top=St.top();
+        St.pop();
+        
+        Reverse(St);
+        PushElements(St, top);
+    }
