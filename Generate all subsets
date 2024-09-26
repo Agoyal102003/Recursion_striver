@@ -1,0 +1,26 @@
+// Approach 1 -> Recursive way 
+
+void generateSubsets(int index, vector<int>& nums, vector<int>& currentSubset, vector<vector<int>>& result) {
+    // Add the current subset to the result
+    result.push_back(currentSubset);
+    
+    // Explore all possibilities by including or excluding each element
+    for (int i = index; i < nums.size(); i++) {
+        // Include nums[i] in the current subset
+        currentSubset.push_back(nums[i]);
+        
+        // Recur to generate further subsets
+        generateSubsets(i + 1, nums, currentSubset, result);
+        
+        // Exclude nums[i] from the current subset (backtrack)
+        currentSubset.pop_back();
+    }
+}
+
+// Function to return all subsets (power set)
+vector<vector<int>> subsets(vector<int>& nums) {
+    vector<vector<int>> result;
+    vector<int> currentSubset;
+    generateSubsets(0, nums, currentSubset, result);  // Start from index 0
+    return result;
+}
