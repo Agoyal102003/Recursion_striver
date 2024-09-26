@@ -1,0 +1,31 @@
+// Approach 1 -> Recussive way 
+
+void sortedElement(stack<int> &s, int element)
+{
+    if(s.empty() || element>=s.top())
+    {
+        s.push(element);
+        return;
+    }
+    int top=s.top();
+    s.pop();
+    
+    sortedElement(s, element);
+    s.push(top);
+}
+
+void SortedStack :: sort()
+{
+   //Your code here
+   if(s.empty())
+   {
+       return;
+   }
+   
+   int top=s.top();
+   s.pop();
+   
+   sort();
+   
+   sortedElement(s, top);
+}
