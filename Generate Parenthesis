@@ -1,0 +1,22 @@
+// Approach 1 -> recursive way
+
+void NumberOfParenthesis(int open, int close, string current, vector<string>& result)
+    {
+        // If there are no more parentheses to add, add the current combination to the result
+        if(open==0 && close==0)
+        {
+            result.push_back(current);
+            return;
+        }
+        // If there are open parentheses left, add one and recurse
+        if(open>0) NumberOfParenthesis(open-1, close, current+"(", result);
+
+        // If the number of close parentheses is greater than the number of open, add one close parenthesis and recurse
+        if(close>open) NumberOfParenthesis(open, close-1, current+")", result);
+    }
+
+    vector<string> generateParenthesis(int n) {
+        vector<string> result;
+        NumberOfParenthesis(n, n, "", result);
+        return result;
+    }
