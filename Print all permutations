@@ -32,3 +32,27 @@ void recurPermute(vector<int>& ds, vector<int>& nums, vector<vector<int>>& ans, 
             recurPermute(ds, nums, ans, freq);
             return ans;
         }
+
+// Approach 2 -> Swapping the elements
+
+void recurPermute(int index, vector<int>& nums, vector<vector<int>>& ans)
+        {
+            if(index==nums.size())
+            {
+                ans.push_back(nums);
+                return;
+            }
+
+            for(int i=index, i<nums.size(); i++)
+            {
+                swap(arr[index], arr[i]);
+                recurPermute(index+1, nums, ans);
+                swap(arr[index], arr[i]);
+            }
+        }
+        vector<vector<int>> permute(vector<int>& nums)
+        {
+            vector<vector<int>> ans;
+            recurPermute(0, nums, ans);
+            return ans;
+        }
