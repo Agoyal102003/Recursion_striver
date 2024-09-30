@@ -1,0 +1,25 @@
+// Approach 1 -> recursive way 
+
+void findCombinationSum(int index, vector<int>& ans, int sum, 
+    vector<int>& arr, int n)
+    {
+        if(index==n)
+        {
+            ans.push_back(sum);
+            return;
+        }
+        
+        //pick the element
+        findCombinationSum(index+1, ans, sum+arr[index], arr, n);
+        
+        //not pick the element
+        findCombinationSum(index+1, ans, sum, arr, n);
+    }
+  
+    vector<int> subsetSums(vector<int> arr, int n) {
+        // Write Your Code here
+        vector<int> ans;
+        findCombinationSum(0, ans, 0, arr, n);
+        sort(ans.begin(), ans.end());
+        return ans;
+    }
